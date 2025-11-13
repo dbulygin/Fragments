@@ -1,12 +1,27 @@
 package otus.gpb.homework.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import otus.gpb.homework.fragments.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private var binding: ActivityMainBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
+
+        binding?.buttonOpenFragmentA?.setOnClickListener {
+            startActivity(Intent(this, FirstActivity::class.java))
+        }
+        binding?.buttonOpenFragmentB?.setOnClickListener {
+            startActivity(Intent(this, SecondActivity::class.java))
+        }
+        binding?.buttonOpenFragmentC?.setOnClickListener {
+            startActivity(Intent(this, ThirdActivity::class.java))
+        }
     }
+
 }
