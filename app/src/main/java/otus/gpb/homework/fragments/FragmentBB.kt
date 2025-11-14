@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import otus.gpb.homework.fragments.databinding.FragmentBBBinding
 
 class FragmentBB : Fragment() {
@@ -27,22 +28,25 @@ class FragmentBB : Fragment() {
 
         binding.buttonSendColorToBA.setOnClickListener {
             val color = ColorGenerator.generateColor()
+            val count = childFragmentManager.backStackEntryCount
+            Toast.makeText(requireContext(), "BackStack count: $count", Toast.LENGTH_SHORT)
+                .show()
             if (isTablet) {
                 sendResult(color, true)
             } else {
                 sendResult(color)
-                openFragmentBA()
+                parentFragmentManager.popBackStack()
             }
         }
     }
 
-    private fun openFragmentBA() {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.containerBA, FragmentBA())
-            .addToBackStack(null)
-            .commit()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (!isTablet) {
+            val fragmentBA = requireActivity().supportFragmentManager.findFragmentByTag("FragmentBA") as? FragmentBA
+            fragmentBA?.showButtonBA()
+        }
     }
-
 }
 
 

@@ -17,7 +17,13 @@ class FragmentAB : Fragment() {
     ): View {
         _binding = FragmentAbBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.containerAB.setBackgroundColor(ColorGenerator.generateColor())
+        val color = arguments?.getInt("color") ?: 0
+        binding.containerAB.setBackgroundColor(color)
         return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

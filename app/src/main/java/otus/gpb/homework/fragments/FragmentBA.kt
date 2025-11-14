@@ -56,12 +56,12 @@ class FragmentBA : Fragment() {
 
         isTablet = requireActivity().findViewById<View>(R.id.fragment1) != null
 
-        if (isTablet) {
-            binding.buttonBA.visibility = View.GONE
-        }
-
         observeResult(isTablet) { color ->
             binding.containerBA.setBackgroundColor(color)
+        }
+
+        if (isTablet) {
+            binding.buttonBA.visibility = View.GONE
         }
 
         binding.buttonBA.setOnClickListener {
@@ -71,11 +71,15 @@ class FragmentBA : Fragment() {
 
     private fun openFragmentBB() {
         val fragmentBB = FragmentBB()
-        childFragmentManager.beginTransaction()
-            .replace(R.id.containerBA, fragmentBB)
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.containerBA, fragmentBB, "FragmentBB")
             .addToBackStack(null)
             .commit()
 
         binding.buttonBA.visibility = View.GONE
+    }
+
+    fun showButtonBA() {
+        binding.buttonBA.visibility = View.VISIBLE
     }
 }

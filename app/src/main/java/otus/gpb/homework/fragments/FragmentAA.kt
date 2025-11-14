@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import otus.gpb.homework.fragments.databinding.FragmentAaBinding
 
 class FragmentAA : Fragment() {
@@ -17,7 +18,9 @@ class FragmentAA : Fragment() {
     ): View {
         _binding = FragmentAaBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.containerAA.setBackgroundColor(ColorGenerator.generateColor())
+        observeResult(true) { color ->
+            binding.containerAA.setBackgroundColor(color)
+        }
         return view
     }
 
@@ -30,10 +33,15 @@ class FragmentAA : Fragment() {
 
     private fun openFragmentAB() {
         val fragmentAB = FragmentAB()
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.containerA, fragmentAB)
+        val color = ColorGenerator.generateColor()
+        fragmentAB.arguments = bundleOf("color" to color)
+        childFragmentManager.beginTransaction()
+            .replace(R.id.containerAA, fragmentAB)
             .addToBackStack(null)
             .commit()
+
+        binding.buttonAB.visibility = View.GONE
+        binding.textViewB.visibility = View.GONE
     }
 
     override fun onDestroyView() {

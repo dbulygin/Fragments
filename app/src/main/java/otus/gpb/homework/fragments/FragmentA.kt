@@ -24,8 +24,8 @@ class FragmentA : Fragment() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     val count = childFragmentManager.backStackEntryCount
-//                    Toast.makeText(requireContext(), "BackStack count: $count", Toast.LENGTH_SHORT)
-//                        .show()
+                    Toast.makeText(requireContext(), "BackStack count: $count", Toast.LENGTH_SHORT)
+                        .show()
                     when {
                         count > 1 -> childFragmentManager.popBackStack()
                         count == 1 -> {
@@ -62,6 +62,9 @@ class FragmentA : Fragment() {
 
     private fun openFragmentAA() {
         val fragmentAA = FragmentAA()
+        
+        sendResult(ColorGenerator.generateColor())
+
         childFragmentManager.beginTransaction()
             .replace(R.id.containerA, fragmentAA)
             .addToBackStack(null)
